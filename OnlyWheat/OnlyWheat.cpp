@@ -9,14 +9,14 @@
 #include <cmath>
 
 #include "FaultyUtilities.hpp"
-
+#include "TileGrid.hpp";
 
 
 
 // settings:
 
-int gridSizeX = 10;
-int gridSizeY = 10;
+int gridSizeX = 12;
+int gridSizeY = 12;
 
 float tileSize = 32;
 
@@ -29,11 +29,17 @@ int windowY = 1080;
 
 int tileCount;
 
-int money = 50;
+int money = 500;
+int moneyGen = 0;
+
+int selectedTool = 0;
+
+bool lsdMode = false;
 
 //size_t vertexBuffer = 100000;
 //sf::VertexArray quad(sf::PrimitiveType::Triangles, vertexBuffer);
 std::vector<sf::Texture> textures;
+std::vector<sf::Texture> uiTextures;
 
 
 // function definitions
@@ -41,7 +47,7 @@ std::vector<sf::Texture> textures;
 
 void AddMoney(int m);
 
-#include "TileGrid.hpp";
+
 
 
 TileGrid tileGrid = TileGrid(gridSizeX, gridSizeY, tileSize, windowX, windowY);
@@ -71,6 +77,7 @@ int main()
     // fps code
     sf::Clock clock;
     float deltaTime = 0;
+    float elapsedTime = 0;
     int fps = 0;
     int steps = 0;
     int avgFPS = 0;
@@ -80,14 +87,24 @@ int main()
     sf::Font font;
     font.openFromFile("./Assets\\VIRUST.ttf"); // set to the font path
 
+    int moneyM = 0;
+
+    float minute = 0;
 
     sf::Text fpsText(font, "60");
     sf::Text moneyText(font, "$ " + std::to_string(money));
+    sf::Text lsdText(font, "Press ''L'' for LSD Mode");
+    sf::Text numberText(font, "0");
+    sf::Text incomeText(font, "Income: ");
     moneyText.setFillColor(sf::Color(0, 255, 0));
     fpsText.setPosition(sf::Vector2f(5, 5));
     moneyText.setPosition(sf::Vector2f(5, 55));
+    incomeText.setPosition(sf::Vector2f(5, 105));
+    lsdText.setPosition(sf::Vector2f(5, 1000));
+    lsdText.setScale(sf::Vector2f(0.5, 0.5));
+    numberText.setScale(sf::Vector2f(0.5, 0.5));
 
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 12; i++)
     {
         textures.emplace_back();
     }
@@ -97,13 +114,28 @@ int main()
     textures[2].loadFromFile("./Assets\\WheatAge1.png");
     textures[3].loadFromFile("./Assets\\WheatAge2.png");
     textures[4].loadFromFile("./Assets\\WheatAge3.png");
+    textures[5].loadFromFile("./Assets\\WheatDead.png");
+    textures[6].loadFromFile("./Assets\\Windmill.png");
+    textures[7].loadFromFile("./Assets\\Windmill1.png");
+    textures[8].loadFromFile("./Assets\\Windmill2.png");
+    textures[9].loadFromFile("./Assets\\Well.png");
+    textures[10].loadFromFile("./Assets\\Scarecrow.png");
+    textures[11].loadFromFile("./Assets\\Pumpjack.png");
 
-
-    for (int i = 0; i < textures.size(); i++)
+    for (int i = 0; i < 9; i++)
     {
-        textures[i].generateMipmap();
-        //textures[i].setSmooth(true);
+        uiTextures.emplace_back();
     }
+
+    uiTextures[0].loadFromFile("./Assets\\Pick.png");
+    uiTextures[1].loadFromFile("./Assets\\Hoe.png");
+    uiTextures[2].loadFromFile("./Assets\\WheatUI.png");
+    uiTextures[3].loadFromFile("./Assets\\WindmillUI.png");
+    uiTextures[4].loadFromFile("./Assets\\WellUI.png");
+    uiTextures[5].loadFromFile("./Assets\\ScarecrowUI.png");
+    uiTextures[6].loadFromFile("./Assets\\PumpjackUI.png");
+    uiTextures[7].loadFromFile("./Assets\\Empty.png");
+    uiTextures[8].loadFromFile("./Assets\\Empty.png");
 
 
     sf::Sprite sprite(textures[0]);
@@ -127,11 +159,12 @@ int main()
         }
         steps++;
 
-
+        
         for (int i = 0; i < tileCount; i++)
         {
-            tileGrid.grid[i].Update();
+            tileGrid.grid[i].Update(deltaTime);
         }
+        
 
 
         while (const std::optional event = window.pollEvent())
@@ -149,18 +182,118 @@ int main()
                     {
                         if (tileGrid.GetTilePosition(i).x + tileSize * 2 > mousePos.x && tileGrid.GetTilePosition(i).x < mousePos.x && tileGrid.GetTilePosition(i).y + tileSize * 2 > mousePos.y && tileGrid.GetTilePosition(i).y < mousePos.y)
                         {
-                            tileGrid.grid[i].Upgrade();
+                            switch (selectedTool)
+                            {
+                            case 0:
+                                switch (tileGrid.grid[i].type)
+                                {
+                                case 0:
+                                    break;
+                                case 1:
+                                    break;
+                                case 2:
+                                    money += 5;
+                                    break;
+                                case 3:
+                                    money += 30;
+                                    break;
+                                case 4:
+                                    money += 20;
+                                    break;
+                                case 5:
+                                    money += 10;
+                                    break;
+                                case 6:
+                                    money += 100;
+                                    break;
+                                }
+
+                                tileGrid.grid[i].Change(0);
+                                break;
+                            case 1:
+                                if (tileGrid.grid[i].type == 0) tileGrid.grid[i].Change(1);
+                                break;
+                            case 2:
+                                if (tileGrid.grid[i].type == 1 && money >= 10)
+                                {
+                                    tileGrid.grid[i].Change(2);
+                                    money -= 10;
+                                }
+                                break;
+                            case 3:
+                                if (tileGrid.grid[i].type == 0 && money >= 50)
+                                {
+                                    tileGrid.grid[i].Change(3);
+                                    money -= 50;
+                                }
+                                break;
+                            case 4:
+                                if (tileGrid.grid[i].type == 0 && money >= 35)
+                                {
+                                    tileGrid.grid[i].Change(4);
+                                    money -= 35;
+                                }
+                                break;
+                            case 5:
+                                if (tileGrid.grid[i].type == 0 && money >= 15)
+                                {
+                                    tileGrid.grid[i].Change(5);
+                                    money -= 15;
+                                }
+                                break;
+                            case 6:
+                                if (tileGrid.grid[i].type == 0 && money >= 150)
+                                {
+                                    tileGrid.grid[i].Change(6);
+                                    money -= 150;
+                                }
+                                break;
+                            }
+                            tileGrid.UpdateTiles();
                             break;
                         }
                     }
 
                 }
 
-                actionLockout = 0.03;
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num1))
+                {
+                    selectedTool = 0;
+                }
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num2))
+                {
+                    selectedTool = 1;
+                }
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num3))
+                {
+                    selectedTool = 2;
+                }
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num4))
+                {
+                    selectedTool = 3;
+                }
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num5))
+                {
+                    selectedTool = 4;
+                }
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num6))
+                {
+                    selectedTool = 5;
+                }
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num7))
+                {
+                    selectedTool = 6;
+                }
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::L))
+                {
+                    lsdMode = !lsdMode;
+
+                    if (lsdMode == false) sprite.setColor(sf::Color(255,255,255));
+                }
+
+                actionLockout = 0.01;
             } 
         }
-
-        
 
         window.clear();
 
@@ -169,18 +302,60 @@ int main()
             sprite.setTexture(textures[tileGrid.grid[i].GetSprite()]);
 
             sprite.setPosition(tileGrid.GetTilePosition(i));
+            //numberText.setPosition(tileGrid.GetTilePosition(i));
+            //numberText.setString(std::to_string(i));
             sprite.setScale(sf::Vector2f(1 * (tileSize / 16), 1 * (tileSize / 16)));
 
+            if (lsdMode == true)
+            {
+                sprite.setColor(sf::Color(cos(elapsedTime * acos(0) * 3) * 100 + 155, cos(elapsedTime * acos(0) * 5) * 100 + 155, cos(elapsedTime * acos(0) * 10) * 100 + 155));
+            }
+
             window.draw(sprite);
+            //window.draw(numberText);
+        }
+
+        for (int i = 0; i < 9; i++)
+        {
+            if (lsdMode == true)
+            {
+                sprite.setColor(sf::Color(cos(elapsedTime * acos(0) * 3) * 100 + 155, cos(elapsedTime * acos(0) * 5) * 100 + 155, cos(elapsedTime * acos(0) * 10) * 100 + 155));
+            }
+
+            sprite.setTexture(uiTextures[i]);
+            sprite.setPosition(sf::Vector2f((windowX / 2) + (i * 64) - 64 * 9 / 2, 950));
+
+            sprite.setScale(sf::Vector2f(2, 2));
+
+            if (i == selectedTool) sprite.setColor(sf::Color(100, 100, 200));
+
+            window.draw(sprite);
+
+            sprite.setColor(sf::Color(255, 255, 255));
         }
 
         window.draw(fpsText);
         window.draw(moneyText);
+        window.draw(lsdText);
+        window.draw(incomeText);
         
 
         window.display();
 
-        window.setFramerateLimit(60);
+        window.setFramerateLimit(6000);
+
+
+
+        elapsedTime += deltaTime;
+        minute += deltaTime;
+
+        incomeText.setString("Income: " + std::to_string((int)((moneyGen / minute) * 60)) + " / min");
+
+        if (minute > 60)
+        {
+            minute = 0;
+            moneyGen = 0;
+        }
 
         //std::cout << "help \n";
     }
@@ -222,4 +397,5 @@ void Draw(sf::RenderWindow& window)
 void AddMoney(int m)
 {
     money += m;
+    moneyGen += m;
 }
