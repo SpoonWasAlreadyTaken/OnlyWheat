@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\laser\\Documents\\GitHub\\OnlyWheat\\OnlyWheat\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\laser\\Documents\\GitHub\\OnlyWheat\\OnlyWheat\\TileGrid.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:TileGrid.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{B0BCB06D-D418-4E84-A6CF-B68ECA3EE1D1}|OnlyWheat.vcxproj|C:\\Users\\laser\\Documents\\GitHub\\OnlyWheat\\OnlyWheat\\OnlyWheat.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{B0BCB06D-D418-4E84-A6CF-B68ECA3EE1D1}|OnlyWheat.vcxproj|solutionrelative:OnlyWheat.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\laser\\Documents\\GitHub\\OnlyWheat\\OnlyWheat\\TileGrid.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:TileGrid.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\laser\\Documents\\GitHub\\OnlyWheat\\OnlyWheat\\UI.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:UI.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,33 +22,45 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "OnlyWheat.cpp",
               "DocumentMoniker": "C:\\Users\\laser\\Documents\\GitHub\\OnlyWheat\\OnlyWheat\\OnlyWheat.cpp",
               "RelativeDocumentMoniker": "OnlyWheat.cpp",
               "ToolTip": "C:\\Users\\laser\\Documents\\GitHub\\OnlyWheat\\OnlyWheat\\OnlyWheat.cpp",
               "RelativeToolTip": "OnlyWheat.cpp",
-              "ViewState": "AgIAAEwBAAAAAAAAAAAAAFgBAAAnAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABAAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-04-17T12:46:33.333Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "TileGrid.hpp",
               "DocumentMoniker": "C:\\Users\\laser\\Documents\\GitHub\\OnlyWheat\\OnlyWheat\\TileGrid.hpp",
               "RelativeDocumentMoniker": "TileGrid.hpp",
               "ToolTip": "C:\\Users\\laser\\Documents\\GitHub\\OnlyWheat\\OnlyWheat\\TileGrid.hpp",
               "RelativeToolTip": "TileGrid.hpp",
-              "ViewState": "AgIAAEEAAAAAAAAAAAAYwFoAAAAWAAAAAAAAAA==",
+              "ViewState": "AgIAAG8AAAAAAAAAAAAYwHwAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-04-17T13:52:19.735Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UI.hpp",
+              "DocumentMoniker": "C:\\Users\\laser\\Documents\\GitHub\\OnlyWheat\\OnlyWheat\\UI.hpp",
+              "RelativeDocumentMoniker": "UI.hpp",
+              "ToolTip": "C:\\Users\\laser\\Documents\\GitHub\\OnlyWheat\\OnlyWheat\\UI.hpp",
+              "RelativeToolTip": "UI.hpp",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAACMAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-04-19T10:23:30.149Z"
             }
           ]
         }

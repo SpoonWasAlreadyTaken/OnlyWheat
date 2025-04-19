@@ -9,7 +9,6 @@
 #include <cmath>
 
 #include "FaultyUtilities.hpp"
-#include "TileGrid.hpp";
 
 
 
@@ -23,13 +22,16 @@ float tileSize = 32;
 int windowX = 1920;
 int windowY = 1080;
 
+// classes
 
+#include "TileGrid.hpp";
+#include "UI.hpp"
 
 // variable definitions
 
 int tileCount;
 
-int money = 500;
+int money = 50000;
 int moneyGen = 0;
 
 int selectedTool = 0;
@@ -40,6 +42,7 @@ bool lsdMode = false;
 //sf::VertexArray quad(sf::PrimitiveType::Triangles, vertexBuffer);
 std::vector<sf::Texture> textures;
 std::vector<sf::Texture> uiTextures;
+sf::Texture emptyBoxTexture;
 
 
 // function definitions
@@ -51,6 +54,7 @@ void AddMoney(int m);
 
 
 TileGrid tileGrid = TileGrid(gridSizeX, gridSizeY, tileSize, windowX, windowY);
+UI ui = UI();
 
 
 int main()
@@ -127,17 +131,24 @@ int main()
         uiTextures.emplace_back();
     }
 
+    emptyBoxTexture.loadFromFile("./Assets\\Empty.png");
     uiTextures[0].loadFromFile("./Assets\\Pick.png");
     uiTextures[1].loadFromFile("./Assets\\Hoe.png");
     uiTextures[2].loadFromFile("./Assets\\WheatUI.png");
     uiTextures[3].loadFromFile("./Assets\\WindmillUI.png");
     uiTextures[4].loadFromFile("./Assets\\WellUI.png");
     uiTextures[5].loadFromFile("./Assets\\ScarecrowUI.png");
-    uiTextures[6].loadFromFile("./Assets\\PumpjackUI.png");
+    uiTextures[6].loadFromFile("./Assets\\PumpjackUI.png"); 
     uiTextures[7].loadFromFile("./Assets\\Empty.png");
     uiTextures[8].loadFromFile("./Assets\\Empty.png");
 
 
+
+    for (int i = 0; i < 9; i++)
+    {
+        ui.AddButton(sf::Vector2f((windowX / 2) + (i * 64) - 64 * 9 / 2, 950), 32, 32, uiTextures[i]);
+    }
+    
     sf::Sprite sprite(textures[0]);
 
     float actionLockout = 0;
@@ -176,11 +187,11 @@ int main()
                     float correct = windowX / window.getSize().x;
                     sf::Vector2f mousePos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
 
-                    std::cout << mousePos.x << "  " << mousePos.y << "\n";
+                    //std::cout << mousePos.x << "  " << mousePos.y << "\n";
 
                     for (int i = 0; i < tileCount; i++)
                     {
-                        if (tileGrid.GetTilePosition(i).x + tileSize * 2 > mousePos.x && tileGrid.GetTilePosition(i).x < mousePos.x && tileGrid.GetTilePosition(i).y + tileSize * 2 > mousePos.y && tileGrid.GetTilePosition(i).y < mousePos.y)
+                        if (tileGrid.grid[i].position.x + tileSize * 2 > mousePos.x && tileGrid.grid[i].position.x < mousePos.x && tileGrid.grid[i].position.y + tileSize * 2 > mousePos.y && tileGrid.grid[i].position.y < mousePos.y)
                         {
                             switch (selectedTool)
                             {
@@ -207,17 +218,22 @@ int main()
                                     money += 100;
                                     break;
                                 }
-
+                                tileGrid.RemoveBuilding(i);
                                 tileGrid.grid[i].Change(0);
                                 break;
                             case 1:
-                                if (tileGrid.grid[i].type == 0) tileGrid.grid[i].Change(1);
+                                if (tileGrid.grid[i].type == 0)
+                                {
+                                    tileGrid.grid[i].Change(1);
+                                    tileGrid.UpdateTile(i);
+                                }
                                 break;
                             case 2:
                                 if (tileGrid.grid[i].type == 1 && money >= 10)
                                 {
                                     tileGrid.grid[i].Change(2);
                                     money -= 10;
+                                    tileGrid.UpdateTile(i);
                                 }
                                 break;
                             case 3:
@@ -225,6 +241,7 @@ int main()
                                 {
                                     tileGrid.grid[i].Change(3);
                                     money -= 50;
+                                    tileGrid.UpdateTile(i);
                                 }
                                 break;
                             case 4:
@@ -232,6 +249,7 @@ int main()
                                 {
                                     tileGrid.grid[i].Change(4);
                                     money -= 35;
+                                    tileGrid.UpdateTile(i);
                                 }
                                 break;
                             case 5:
@@ -239,6 +257,7 @@ int main()
                                 {
                                     tileGrid.grid[i].Change(5);
                                     money -= 15;
+                                    tileGrid.UpdateTile(i);
                                 }
                                 break;
                             case 6:
@@ -246,11 +265,50 @@ int main()
                                 {
                                     tileGrid.grid[i].Change(6);
                                     money -= 150;
+                                    tileGrid.UpdateTile(i);
                                 }
                                 break;
                             }
-                            tileGrid.UpdateTiles();
+                            tileGrid.grid[i].PrintStats();
                             break;
+                        }
+                    }
+
+                    for (int i = 0; i < ui.buttons.size(); i++)
+                    {
+                        if (ui.buttons[i].position.x + ui.buttons[i].sizeX * 2 > mousePos.x && ui.buttons[i].position.x < mousePos.x && ui.buttons[i].position.y + ui.buttons[i].sizeY * 2 > mousePos.y && ui.buttons[i].position.y < mousePos.y)
+                        {
+                            switch (i)
+                            {
+                            case 0:
+                                selectedTool = 0;
+                                ui.selectedButton = 0;
+                                break;
+                            case 1:
+                                selectedTool = 1;
+                                ui.selectedButton = 1;
+                                break;
+                            case 2:
+                                selectedTool = 2;
+                                ui.selectedButton = 2;
+                                break;
+                            case 3:
+                                selectedTool = 3;
+                                ui.selectedButton = 3;
+                                break;
+                            case 4:
+                                selectedTool = 4;
+                                ui.selectedButton = 4;
+                                break;
+                            case 5:
+                                selectedTool = 5;
+                                ui.selectedButton = 5;
+                                break;
+                            case 6:
+                                selectedTool = 6;
+                                ui.selectedButton = 6;
+                                break;
+                            }
                         }
                     }
 
@@ -259,36 +317,47 @@ int main()
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num1))
                 {
                     selectedTool = 0;
+                    ui.selectedButton = 0;
                 }
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num2))
                 {
                     selectedTool = 1;
+                    ui.selectedButton = 1;
                 }
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num3))
                 {
                     selectedTool = 2;
+                    ui.selectedButton = 2;
                 }
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num4))
                 {
                     selectedTool = 3;
+                    ui.selectedButton = 3;
                 }
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num5))
                 {
                     selectedTool = 4;
+                    ui.selectedButton = 4;
                 }
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num6))
                 {
                     selectedTool = 5;
+                    ui.selectedButton = 5;
                 }
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num7))
                 {
                     selectedTool = 6;
+                    ui.selectedButton = 6;
                 }
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::L))
                 {
                     lsdMode = !lsdMode;
 
                     if (lsdMode == false) sprite.setColor(sf::Color(255,255,255));
+                }
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::M))
+                {
+                    tileGrid.EnableMove();
                 }
 
                 actionLockout = 0.01;
@@ -301,7 +370,7 @@ int main()
         {
             sprite.setTexture(textures[tileGrid.grid[i].GetSprite()]);
 
-            sprite.setPosition(tileGrid.GetTilePosition(i));
+            sprite.setPosition(tileGrid.grid[i].position);
             //numberText.setPosition(tileGrid.GetTilePosition(i));
             //numberText.setString(std::to_string(i));
             sprite.setScale(sf::Vector2f(1 * (tileSize / 16), 1 * (tileSize / 16)));
@@ -315,19 +384,21 @@ int main()
             //window.draw(numberText);
         }
 
-        for (int i = 0; i < 9; i++)
+        for (int i = 0; i < ui.buttons.size(); i++)
         {
             if (lsdMode == true)
             {
                 sprite.setColor(sf::Color(cos(elapsedTime * acos(0) * 3) * 100 + 155, cos(elapsedTime * acos(0) * 5) * 100 + 155, cos(elapsedTime * acos(0) * 10) * 100 + 155));
             }
 
-            sprite.setTexture(uiTextures[i]);
-            sprite.setPosition(sf::Vector2f((windowX / 2) + (i * 64) - 64 * 9 / 2, 950));
+            sprite.setTexture(ui.buttons[i].texture);
+
+            sprite.setPosition(ui.buttons[i].position);
+            //sprite.setPosition(sf::Vector2f((windowX / 2) + (i * 64) - 64 * 9 / 2, 950));
 
             sprite.setScale(sf::Vector2f(2, 2));
 
-            if (i == selectedTool) sprite.setColor(sf::Color(100, 100, 200));
+            if (i == ui.selectedButton) sprite.setColor(sf::Color(100, 100, 200));
 
             window.draw(sprite);
 
@@ -336,6 +407,9 @@ int main()
 
         window.draw(fpsText);
         window.draw(moneyText);
+
+        if (!lsdMode) lsdText.setFillColor(sf::Color(cos(elapsedTime * acos(0) * 3) * 100 + 155, cos(elapsedTime * acos(0) * 5) * 100 + 155, cos(elapsedTime * acos(0) * 10) * 100 + 155));
+        else lsdText.setFillColor(sf::Color(255, 255, 255));
         window.draw(lsdText);
         window.draw(incomeText);
         
