@@ -1,29 +1,45 @@
 ﻿cl : command line  warning D9002: ignoring unknown option '/arch:SSE'
   OnlyWheat.cpp
 C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\OnlyWheat.cpp(27,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(30,62): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(30,62): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
 C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(30,62): warning C4244:         with
+C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(30,62): warning C4244:         [
+C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(30,62): warning C4244:             T=int
+C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(30,62): warning C4244:         ]
+C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(30,62): warning C4244:         and
 C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(30,62): warning C4244:         [
 C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(30,62): warning C4244:             T=float
 C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(30,62): warning C4244:         ]
   (compiling source file 'OnlyWheat.cpp')
   
-C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(30,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(30,39): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
 C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(30,39): warning C4244:         with
+C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(30,39): warning C4244:         [
+C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(30,39): warning C4244:             T=int
+C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(30,39): warning C4244:         ]
+C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(30,39): warning C4244:         and
 C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(30,39): warning C4244:         [
 C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(30,39): warning C4244:             T=float
 C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(30,39): warning C4244:         ]
   (compiling source file 'OnlyWheat.cpp')
   
-C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(243,73): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(243,73): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
 C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(243,73): warning C4244:         with
+C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(243,73): warning C4244:         [
+C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(243,73): warning C4244:             T=int
+C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(243,73): warning C4244:         ]
+C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(243,73): warning C4244:         and
 C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(243,73): warning C4244:         [
 C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(243,73): warning C4244:             T=float
 C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(243,73): warning C4244:         ]
   (compiling source file 'OnlyWheat.cpp')
   
-C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(243,48): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(243,48): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
 C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(243,48): warning C4244:         with
+C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(243,48): warning C4244:         [
+C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(243,48): warning C4244:             T=int
+C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(243,48): warning C4244:         ]
+C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(243,48): warning C4244:         and
 C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(243,48): warning C4244:         [
 C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(243,48): warning C4244:             T=float
 C:\Users\Spoon\Documents\GitHub\OnlyWheat\OnlyWheat\TileGrid.hpp(243,48): warning C4244:         ]
