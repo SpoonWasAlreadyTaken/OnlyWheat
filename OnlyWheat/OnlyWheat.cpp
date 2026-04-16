@@ -22,9 +22,12 @@ float tileSize = 32;
 int windowX = 1920;
 int windowY = 1080;
 
+
+sf::Texture missingTexture; 
+
 // classes
 
-#include "TileGrid.hpp";
+#include "TileGrid.hpp"
 #include "UI.hpp"
 
 // variable definitions
@@ -40,8 +43,6 @@ bool lsdMode = false;
 
 //size_t vertexBuffer = 100000;
 //sf::VertexArray quad(sf::PrimitiveType::Triangles, vertexBuffer);
-std::vector<sf::Texture> textures;
-std::vector<sf::Texture> uiTextures;
 sf::Texture emptyBoxTexture;
 
 
@@ -59,6 +60,9 @@ UI ui = UI();
 
 int main()
 {
+    if (!missingTexture.loadFromFile("./Assets/Missing.png")) return 1;
+
+
     tileCount = gridSizeX * gridSizeY;
 
     sf::RenderWindow window(sf::VideoMode({ (uint32_t)(windowX), (uint32_t)(windowY) }), "Only Wheat");
@@ -89,7 +93,7 @@ int main()
 
     // text code
     sf::Font font;
-    font.openFromFile("./Assets\\VIRUST.ttf"); // set to the font path
+    if (!font.openFromFile("./Assets/VIRUST.ttf")) return 1; // set to the font path
 
     int moneyM = 0;
 
@@ -108,45 +112,11 @@ int main()
     lsdText.setScale(sf::Vector2f(0.5, 0.5));
     numberText.setScale(sf::Vector2f(0.5, 0.5));
 
-    for (int i = 0; i < 12; i++)
-    {
-        textures.emplace_back();
-    }
-
-    textures[0].loadFromFile("./Assets\\Dirt.png");
-    textures[1].loadFromFile("./Assets\\TilledDirt.png");
-    textures[2].loadFromFile("./Assets\\WheatAge1.png");
-    textures[3].loadFromFile("./Assets\\WheatAge2.png");
-    textures[4].loadFromFile("./Assets\\WheatAge3.png");
-    textures[5].loadFromFile("./Assets\\WheatDead.png");
-    textures[6].loadFromFile("./Assets\\Windmill.png");
-    textures[7].loadFromFile("./Assets\\Windmill1.png");
-    textures[8].loadFromFile("./Assets\\Windmill2.png");
-    textures[9].loadFromFile("./Assets\\Well.png");
-    textures[10].loadFromFile("./Assets\\Scarecrow.png");
-    textures[11].loadFromFile("./Assets\\Pumpjack.png");
-
-    for (int i = 0; i < 9; i++)
-    {
-        uiTextures.emplace_back();
-    }
-
-    emptyBoxTexture.loadFromFile("./Assets\\Empty.png");
-    uiTextures[0].loadFromFile("./Assets\\Pick.png");
-    uiTextures[1].loadFromFile("./Assets\\Hoe.png");
-    uiTextures[2].loadFromFile("./Assets\\WheatUI.png");
-    uiTextures[3].loadFromFile("./Assets\\WindmillUI.png");
-    uiTextures[4].loadFromFile("./Assets\\WellUI.png");
-    uiTextures[5].loadFromFile("./Assets\\ScarecrowUI.png");
-    uiTextures[6].loadFromFile("./Assets\\PumpjackUI.png"); 
-    uiTextures[7].loadFromFile("./Assets\\Empty.png");
-    uiTextures[8].loadFromFile("./Assets\\Empty.png");
-
 
 
     for (int i = 0; i < 9; i++)
     {
-        ui.AddButton(sf::Vector2f((windowX / 2) + (i * 64) - 64 * 9 / 2, 950), 32, 32, uiTextures[i]);
+        ui.AddButton(sf::Vector2f(((float)windowX / 2) + (i * 64) - (float)64 * 9 / 2, 950), 32, 32, uiTextures[i]);
     }
     
     sf::Sprite sprite(textures[0]);
@@ -184,7 +154,7 @@ int main()
             {
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
                 {
-                    float correct = windowX / window.getSize().x;
+                    float correct = (float)windowX / window.getSize().x;
                     sf::Vector2f mousePos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
 
                     //std::cout << mousePos.x << "  " << mousePos.y << "\n";

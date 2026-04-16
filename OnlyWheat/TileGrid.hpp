@@ -3,8 +3,49 @@
 
 void AddMoney(int m);
 
+size_t persistentID{};
+size_t GetUID() { return persistentID++; }
+
+enum TileType { empty, dirt, tilledDirt, wheat, windmill, well, scarecrow, pumpjack};
+
+
 
 class Tile
+{
+public:
+    size_t uID{};
+    TileType type = empty;
+
+    sf::Texture texture = missingTexture;
+    sf::Color color = sf::Color(255,255,255);
+    float size{};
+
+    sf::Vector2f position{};
+    sf::Vector2f startingPosition{};
+    bool movement = false;
+
+
+    virtual void Update() {};
+    virtual void Start() {};
+    virtual void OnChange() {};
+    virtual void Reset() {};    
+};
+
+
+class Dirt : public Tile
+{
+
+    Dirt()
+    {
+        uID = GetUID();
+        texture.loadFromFile("./Assets/Dirt.png");
+    }
+
+};
+
+
+
+class OldTile
 {
 public:
 	int id;
@@ -22,7 +63,7 @@ public:
 
 	bool isBuilding;
 	
-	Tile(int i, int t, sf::Vector2f pos, float s, bool b)
+	OldTile(int i, int t, sf::Vector2f pos, float s, bool b)
 	{
 		id = i;
 		type = t;
