@@ -375,6 +375,7 @@ private:
 	size_t screenX;
 	size_t screenY;
 
+
     std::vector<size_t> GetArea(size_t index, size_t radius)
     {
         std::vector<size_t> area;
